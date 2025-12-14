@@ -1,0 +1,44 @@
+services:
+  - name: product-service
+    image: product-service:latest
+    port: 8081
+    type: ClusterIP
+    env:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/product_db
+  
+  - name: order-service
+    image: order-service:latest
+    port: 8082
+    type: ClusterIP
+    env:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/order_db
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+
+  - name: inventory-service
+    image: inventory-service:latest
+    port: 8083
+    type: ClusterIP
+    env:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/inventory_db
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+
+  - name: notification-service
+    image: notification-service:latest
+    port: 8084
+    type: ClusterIP
+    env:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+
+  - name: frontend
+    image: frontend:latest
+    port: 80
+    type: NodePort # Exposed for access
+    nodePort: 30000
+
+postgres:
+  enabled: true
+  user: postgres
+  password: postgres
+
+kafka:
+  enabled: true
