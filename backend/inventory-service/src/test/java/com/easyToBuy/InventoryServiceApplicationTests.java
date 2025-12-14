@@ -1,4 +1,4 @@
-package com.programmingtechie.inventoryservice;
+package com.easyToBuy;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

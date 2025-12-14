@@ -1,4 +1,4 @@
-package com.programmingtechie.orderservice.event;
+package com.easyToBuy.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

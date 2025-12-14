@@ -1,8 +1,8 @@
-package com.programmingtechie.productservice.controller;
+package com.easyToBuy.controller;
 
-import com.programmingtechie.productservice.dto.ProductRequest;
-import com.programmingtechie.productservice.dto.ProductResponse;
-import com.programmingtechie.productservice.service.ProductService;
+import com.easyToBuy.dto.ProductRequest;
+import com.easyToBuy.dto.ProductResponse;
+import com.easyToBuy.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

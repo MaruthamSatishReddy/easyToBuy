@@ -1,4 +1,4 @@
-package com.programmingtechie.orderservice.model;
+package com.easyToBuy.model;
 
 import jakarta.persistence.*;
 import lombok.*;

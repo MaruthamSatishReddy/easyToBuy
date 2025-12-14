@@ -1,8 +1,8 @@
-package com.programmingtechie.inventoryservice.service;
+package com.easyToBuy.service;
 
-import com.programmingtechie.inventoryservice.event.OrderPlacedEvent;
-import com.programmingtechie.inventoryservice.model.Inventory;
-import com.programmingtechie.inventoryservice.repository.InventoryRepository;
+import com.easyToBuy.event.OrderPlacedEvent;
+import com.easyToBuy.model.Inventory;
+import com.easyToBuy.repository.InventoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;

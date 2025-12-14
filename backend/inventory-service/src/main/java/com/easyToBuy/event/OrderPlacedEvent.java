@@ -1,4 +1,4 @@
-package com.programmingtechie.inventoryservice.event;
+package com.easyToBuy.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

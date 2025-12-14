@@ -1,6 +1,6 @@
-package com.programmingtechie.inventoryservice.repository;
+package com.easyToBuy.repository;
 
-import com.programmingtechie.inventoryservice.model.Inventory;
+import com.easyToBuy.model.Inventory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 

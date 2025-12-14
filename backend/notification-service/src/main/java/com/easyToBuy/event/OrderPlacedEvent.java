@@ -1,4 +1,4 @@
-package main.java.com.programmingtechie.notificationservice.event;
+package com.easyToBuy.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

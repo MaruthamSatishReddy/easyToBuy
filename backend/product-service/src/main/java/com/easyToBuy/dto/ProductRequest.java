@@ -1,4 +1,4 @@
-package com.programmingtechie.productservice.dto;
+package com.easyToBuy.dto;
 
 import java.math.BigDecimal;
 import java.util.List;

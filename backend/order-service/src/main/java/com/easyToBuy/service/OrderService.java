@@ -1,9 +1,9 @@
-package com.programmingtechie.orderservice.service;
+package com.easyToBuy.service;
 
-import com.programmingtechie.orderservice.dto.OrderRequest;
-import com.programmingtechie.orderservice.event.OrderPlacedEvent;
-import com.programmingtechie.orderservice.model.Order;
-import com.programmingtechie.orderservice.repository.OrderRepository;
+import com.easyToBuy.dto.OrderRequest;
+import com.easyToBuy.event.OrderPlacedEvent;
+import com.easyToBuy.model.Order;
+import com.easyToBuy.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;

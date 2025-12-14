@@ -1,4 +1,4 @@
-package com.programmingtechie.productservice.model;
+package com.easyToBuy.model;
 
 import jakarta.persistence.*;
 import lombok.*;

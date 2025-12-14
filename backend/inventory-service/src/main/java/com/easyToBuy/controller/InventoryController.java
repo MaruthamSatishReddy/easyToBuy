@@ -1,7 +1,7 @@
-package com.programmingtechie.inventoryservice.controller;
+package com.easyToBuy.controller;
 
-import com.programmingtechie.inventoryservice.model.Inventory;
-import com.programmingtechie.inventoryservice.repository.InventoryRepository;
+import com.easyToBuy.model.Inventory;
+import com.easyToBuy.repository.InventoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

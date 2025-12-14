@@ -1,4 +1,4 @@
-package main.java.com.programmingtechie.notificationservice.service;
+package com.easyToBuy.service;
 
 import com.programmingtechie.notificationservice.event.OrderPlacedEvent;
 import lombok.extern.slf4j.Slf4j;
