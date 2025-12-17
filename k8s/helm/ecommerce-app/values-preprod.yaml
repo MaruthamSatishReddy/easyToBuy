@@ -1,0 +1,11 @@
+services:
+  - name: product-service
+    image: registry.preprod.company.com/product-service:rc-1
+  - name: order-service
+    image: registry.preprod.company.com/order-service:rc-1
+  - name: inventory-service
+    image: registry.preprod.company.com/inventory-service:rc-1
+  - name: notification-service
+    image: registry.preprod.company.com/notification-service:rc-1
+  - name: frontend
+    image: registry.preprod.company.com/frontend:rc-1

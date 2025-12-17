@@ -1,0 +1,11 @@
+/Users/satishmarutham/Documents/SatishMarutham/Java/EasyToBuy-2026/ecommerce/backend/auth-service/src/main/java/com/easyToBuy/config/SecurityConfig.java
+/Users/satishmarutham/Documents/SatishMarutham/Java/EasyToBuy-2026/ecommerce/backend/auth-service/src/main/java/com/easyToBuy/controller/AuthController.java
+/Users/satishmarutham/Documents/SatishMarutham/Java/EasyToBuy-2026/ecommerce/backend/auth-service/src/main/java/com/easyToBuy/dto/LoginRequest.java
+/Users/satishmarutham/Documents/SatishMarutham/Java/EasyToBuy-2026/ecommerce/backend/auth-service/src/main/java/com/easyToBuy/AuthServiceApplication.java
+/Users/satishmarutham/Documents/SatishMarutham/Java/EasyToBuy-2026/ecommerce/backend/auth-service/src/main/java/com/easyToBuy/dto/AuthResponse.java
+/Users/satishmarutham/Documents/SatishMarutham/Java/EasyToBuy-2026/ecommerce/backend/auth-service/src/main/java/com/easyToBuy/security/JwtTokenProvider.java
+/Users/satishmarutham/Documents/SatishMarutham/Java/EasyToBuy-2026/ecommerce/backend/auth-service/src/main/java/com/easyToBuy/repository/UserRepository.java
+/Users/satishmarutham/Documents/SatishMarutham/Java/EasyToBuy-2026/ecommerce/backend/auth-service/src/main/java/com/easyToBuy/dto/UserResponse.java
+/Users/satishmarutham/Documents/SatishMarutham/Java/EasyToBuy-2026/ecommerce/backend/auth-service/src/main/java/com/easyToBuy/dto/RegisterRequest.java
+/Users/satishmarutham/Documents/SatishMarutham/Java/EasyToBuy-2026/ecommerce/backend/auth-service/src/main/java/com/easyToBuy/model/User.java
+/Users/satishmarutham/Documents/SatishMarutham/Java/EasyToBuy-2026/ecommerce/backend/auth-service/src/main/java/com/easyToBuy/service/AuthService.java

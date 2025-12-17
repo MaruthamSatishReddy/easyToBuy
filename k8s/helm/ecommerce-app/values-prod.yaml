@@ -1,0 +1,16 @@
+services:
+  - name: product-service
+    image: registry.prod.company.com/product-service:stable
+    replicas: 2
+  - name: order-service
+    image: registry.prod.company.com/order-service:stable
+    replicas: 2
+  - name: inventory-service
+    image: registry.prod.company.com/inventory-service:stable
+    replicas: 2
+  - name: notification-service
+    image: registry.prod.company.com/notification-service:stable
+    replicas: 2
+  - name: frontend
+    image: registry.prod.company.com/frontend:stable
+    replicas: 3
