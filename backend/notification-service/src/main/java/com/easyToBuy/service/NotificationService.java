@@ -1,9 +1,10 @@
 package com.easyToBuy.service;
 
-import com.programmingtechie.notificationservice.event.OrderPlacedEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+
+import com.easyToBuy.event.OrderPlacedEvent;
 
 @Service
 @Slf4j

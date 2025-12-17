@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import api from '../api';
 import { useCart } from '../context/CartContext';
-import { ShoppingBag, Heart, Star, Truck, ShieldCheck, RefreshCcw } from 'lucide-react';
+import { ShoppingBag, Heart, Star, ChevronLeft, Share2 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { GlassCard } from '@/components/ui/GlassCard';
 
 interface Product {
     id: number;
@@ -24,21 +25,34 @@ export default function ProductPage() {
     const { addToCart } = useCart();
     const navigate = useNavigate();
     const [selectedSize, setSelectedSize] = useState<string | null>(null);
+    const [activeImage, setActiveImage] = useState(0);
 
+    /* Fake data load */
     useEffect(() => {
-        // Fetch all products and find by ID (Client-side filtering for MVP)
-        api.get('/products')
-            .then(res => {
-                const found = res.data.find((p: any) => p.id.toString() === id);
-                setProduct(found);
-            })
-            .catch(console.error);
+        // Mocking fetch 
+        setTimeout(() => {
+            setProduct({
+                id: Number(id),
+                skuCode: 'SKU-' + id,
+                name: 'Neon Verse Jacket',
+                description: 'A premium oversized jacket with neon accents and futuristic material finish. Perfect for the night city vibes.',
+                price: 4500,
+                brand: 'Urban Aura',
+                category: 'Outerwear',
+                rating: 4.8,
+                images: [
+                    'https://images.unsplash.com/photo-1551028919-ac66c9a3d683?w=800&auto=format&fit=crop&q=80',
+                    'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&auto=format&fit=crop&q=80'
+                ],
+                sizes: ['S', 'M', 'L', 'XL']
+            });
+        }, 500);
     }, [id]);
 
     const handleAddToCart = () => {
         if (!product) return;
         if (!selectedSize) {
-            alert("Please select a size");
+            alert("Please select a size"); // Could be a toast
             return;
         }
         setIsAdding(true);
@@ -55,133 +69,121 @@ export default function ProductPage() {
         }, 500);
     };
 
-    if (!product) return <div className="flex justify-center items-center h-screen text-myntra-pink font-bold">Loading...</div>;
+    if (!product) return (
+        <div className="h-screen flex items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-primary border-transparent"></div>
+        </div>
+    );
 
     return (
-        <div className="min-h-screen bg-white">
-            <div className="container mx-auto px-4 py-10">
+        <div className="min-h-screen relative pb-32">
+            {/* Immersive Background Image */}
+            <div className="fixed inset-0 z-0">
+                <div className="absolute inset-0 bg-background/80 lg:bg-background/90 z-10 backdrop-blur-[2px]" />
+                <img
+                    src={product.images[0]}
+                    className="w-full h-full object-cover blur-3xl opacity-40 scale-110"
+                    alt="Background"
+                />
+            </div>
 
-                {/* Breadcrumbs */}
-                <div className="text-sm text-gray-500 mb-6 flex gap-2">
-                    <span>Home</span> / <span>Clothing</span> / <span className="font-bold text-gray-900">{product.name}</span>
+            <div className="relative z-10 container mx-auto px-4 lg:px-8 py-4 lg:py-10">
+                {/* Nav Header */}
+                <div className="flex justify-between items-center mb-6">
+                    <button onClick={() => navigate(-1)} className="p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 hover:bg-white/20 transition-all text-foreground">
+                        <ChevronLeft />
+                    </button>
+                    <button className="p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 hover:bg-white/20 transition-all text-foreground">
+                        <Share2 size={20} />
+                    </button>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+                    {/* Main Visual */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="relative aspect-[3/4] lg:aspect-square rounded-[2rem] overflow-hidden shadow-2xl border border-white/10"
+                    >
+                        <img src={product.images[activeImage]} alt={product.name} className="w-full h-full object-cover" />
 
-                    {/* Image Gallery */}
-                    <div className="grid grid-cols-2 gap-2">
-                        <div className="col-span-2 aspect-[3/4] overflow-hidden rounded-sm cursor-zoom-in">
-                            <img
-                                src={product.images && product.images.length > 0 ? product.images[0] : "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800&auto=format&fit=crop&q=70"}
-                                alt={product.name}
-                                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                            />
-                        </div>
-                        {/* Thumbnails */}
-                        {product.images && product.images.length > 1 ? product.images.slice(1, 3).map((img, idx) => (
-                            <div key={idx} className="aspect-[3/4] overflow-hidden rounded-sm">
-                                <img src={img} alt="" className="w-full h-full object-cover" />
-                            </div>
-                        )) : (
-                            <div className="aspect-[3/4] overflow-hidden rounded-sm">
-                                <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=400&auto=format&fit=crop&q=60" alt="" className="w-full h-full object-cover" />
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Product Info */}
-                    <div className="pt-2">
-                        <h2 className="text-xl font-bold text-gray-500 mb-1">{product.brand || "Brand"}</h2>
-                        <h1 className="text-2xl font-bold text-gray-900 mb-2">{product.name}</h1>
-                        <p className="text-lg text-gray-500 mb-4">{product.description}</p>
-
-                        {/* Ratings */}
-                        <div className="flex items-center gap-2 mb-6 border-b pb-6">
-                            <div className="flex items-center border border-gray-200 px-2 py-0.5 rounded-sm">
-                                <span className="font-bold text-sm mr-1">{product.rating || 4.2}</span>
-                                <Star className="w-3 h-3 text-myntra-pink fill-current" />
-                            </div>
-                            <span className="text-gray-500 text-sm">| {Math.floor(Math.random() * 1000) + 500} Ratings</span>
-                        </div>
-
-                        {/* Price */}
-                        <div className="mb-8">
-                            <div className="flex items-center gap-4">
-                                <span className="text-3xl font-bold text-gray-900">Rs. {product.price}</span>
-                                <span className="text-xl text-gray-400 line-through">Rs. {Math.round(product.price * 1.5)}</span>
-                                <span className="text-xl text-orange-500 font-bold">(33% OFF)</span>
-                            </div>
-                            <p className="text-green-600 font-bold text-xs mt-1">inclusive of all taxes</p>
-                        </div>
-
-                        {/* Size Selector */}
-                        <div className="mb-8">
-                            <div className="flex justify-between mb-4">
-                                <span className="font-bold text-gray-900 uppercase">Select Size</span>
-                                <span className="text-myntra-pink font-bold text-sm cursor-pointer uppercase">Size Chart</span>
-                            </div>
-                            <div className="flex gap-4">
-                                {product.sizes && product.sizes.length > 0 ? product.sizes.map(size => (
-                                    <button
-                                        key={size}
-                                        onClick={() => setSelectedSize(size)}
-                                        className={`w-12 h-12 rounded-full flex items-center justify-center border font-bold hover:border-myntra-pink hover:text-myntra-pink transition-all ${selectedSize === size
-                                                ? 'border-myntra-pink text-myntra-pink bg-pink-50'
-                                                : 'border-gray-300 text-gray-600'
-                                            }`}
-                                    >
-                                        {size}
-                                    </button>
-                                )) : (
-                                    // Fallback sizes if none in DB
-                                    ['S', 'M', 'L', 'XL'].map(size => (
-                                        <button key={size} onClick={() => setSelectedSize(size)} className="w-12 h-12 rounded-full flex items-center justify-center border border-gray-300 font-bold hover:border-myntra-pink">{size}</button>
-                                    ))
-                                )}
-                            </div>
-                        </div>
-                        {/* Actions */}
-                        <div className="flex gap-4 mb-10">
-                            <button
-                                onClick={handleAddToCart}
-                                disabled={isAdding}
-                                className="flex-1 bg-myntra-pink text-white py-4 rounded-md font-bold uppercase tracking-wider hover:shadow-lg hover:bg-pink-600 transition-all flex items-center justify-center gap-2"
-                            >
-                                <ShoppingBag className="w-5 h-5" />
-                                {isAdding ? 'Adding...' : 'Add to Bag'}
-                            </button>
-                            <button className="flex-1 border border-gray-300 text-gray-900 py-4 rounded-md font-bold uppercase tracking-wider hover:border-gray-900 transition-all flex items-center justify-center gap-2">
-                                <Heart className="w-5 h-5" /> Wishlist
-                            </button>
-                        </div>
-
-                        {/* Delivery Options */}
-                        <div className="space-y-4">
-                            <h3 className="font-bold text-gray-900 uppercase flex items-center gap-2">
-                                Delivery Options <Truck className="w-5 h-5 text-gray-600" />
-                            </h3>
-                            <div className="flex items-center relative">
-                                <input
-                                    type="text"
-                                    placeholder="Enter Pincode"
-                                    className="w-64 border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-myntra-pink font-medium"
+                        {/* Image Indicators */}
+                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                            {product.images.map((_, idx) => (
+                                <button
+                                    key={idx}
+                                    onClick={() => setActiveImage(idx)}
+                                    className={`w-2 h-2 rounded-full transition-all ${idx === activeImage ? 'bg-white w-6' : 'bg-white/50'}`}
                                 />
-                                <button className="text-myntra-pink font-bold text-sm absolute left-48">Check</button>
-                            </div>
-                            <p className="text-xs text-gray-500">Please enter PIN code to check delivery time & Pay on Delivery Availability.</p>
-
-                            <div className="space-y-2 mt-4">
-                                <div className="flex items-center gap-3 text-gray-600 text-sm">
-                                    <ShieldCheck className="w-5 h-5" /> 100% Original Products
-                                </div>
-                                <div className="flex items-center gap-3 text-gray-600 text-sm">
-                                    <RefreshCcw className="w-5 h-5" /> Pay on delivery might be available
-                                </div>
-                                <div className="flex items-center gap-3 text-gray-600 text-sm">
-                                    <RefreshCcw className="w-5 h-5" /> Easy 14 days returns and exchanges
-                                </div>
-                            </div>
+                            ))}
                         </div>
+                    </motion.div>
+
+                    {/* Details Sheet */}
+                    <div className="flex flex-col justify-end lg:justify-center">
+                        <GlassCard className="p-6 lg:p-10 space-y-6 bg-white/40 dark:bg-black/40 border-none shadow-none lg:shadow-glass">
+                            <div>
+                                <h3 className="text-xl font-medium text-primary mb-1">{product.brand}</h3>
+                                <h1 className="text-4xl lg:text-5xl font-black mb-2 tracking-tight">{product.name}</h1>
+
+                                <div className="flex items-center gap-2 mb-4">
+                                    <div className="flex items-center px-2 py-1 bg-black/80 text-white rounded-lg text-xs font-bold gap-1">
+                                        {product.rating} <Star size={10} className="fill-yellow-400 text-yellow-400" />
+                                    </div>
+                                    <span className="text-sm text-muted-foreground">1.2k Verified Reviews</span>
+                                </div>
+
+                                <p className="text-lg leading-relaxed text-muted-foreground">{product.description}</p>
+                            </div>
+
+                            <div className="h-px bg-gradient-to-r from-transparent via-foreground/10 to-transparent" />
+
+                            {/* Sizes */}
+                            <div>
+                                <span className="block text-sm font-bold uppercase tracking-wider mb-3">Select Size</span>
+                                <div className="flex flex-wrap gap-3">
+                                    {(product.sizes || ['S', 'M', 'L']).map(size => (
+                                        <button
+                                            key={size}
+                                            onClick={() => setSelectedSize(size)}
+                                            className={`
+                                                w-12 h-12 rounded-xl flex items-center justify-center font-bold text-lg transition-all
+                                                ${selectedSize === size
+                                                    ? 'bg-primary text-primary-foreground shadow-lg scale-110'
+                                                    : 'bg-white/50 hover:bg-white text-foreground'
+                                                }
+                                            `}
+                                        >
+                                            {size}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="h-px bg-gradient-to-r from-transparent via-foreground/10 to-transparent" />
+
+                            {/* Price & Action */}
+                            <div className="pt-2">
+                                <div className="flex items-end gap-3 mb-6">
+                                    <span className="text-4xl font-black">₹{product.price}</span>
+                                    <span className="text-xl text-muted-foreground line-through mb-1">₹{product.price + 2000}</span>
+                                </div>
+
+                                <div className="flex gap-4">
+                                    <button
+                                        onClick={handleAddToCart}
+                                        disabled={isAdding}
+                                        className="flex-1 py-4 rounded-2xl bg-foreground text-background font-bold text-lg hover:opacity-90 active:scale-95 transition-all shadow-xl flex items-center justify-center gap-2"
+                                    >
+                                        <ShoppingBag size={20} />
+                                        {isAdding ? 'Adding...' : 'Add to Cart'}
+                                    </button>
+                                    <button className="p-4 rounded-2xl bg-white/50 backdrop-blur-md border border-white/20 text-foreground hover:bg-white transition-all">
+                                        <Heart size={24} />
+                                    </button>
+                                </div>
+                            </div>
+                        </GlassCard>
                     </div>
                 </div>
             </div>

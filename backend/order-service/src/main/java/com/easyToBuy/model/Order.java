@@ -1,11 +1,11 @@
 package com.easyToBuy.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.*;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "t_orders")
+@Document(collection = "orders")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -13,8 +13,7 @@ import java.math.BigDecimal;
 @Builder
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private String orderNumber;
     private String skuCode;
     private BigDecimal price;

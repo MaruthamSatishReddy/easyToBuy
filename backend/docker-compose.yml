@@ -1,14 +1,14 @@
 services:
-  postgres:
-    container_name: postgres
-    image: postgres:16
+  mongodb:
+    container_name: mongodb
+    image: mongo:7.0
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
     ports:
-      - "5432:5432"
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
     restart: always
 
   zookeeper:
@@ -52,9 +52,21 @@ services:
     ports:
       - "8081:8081"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/product_db
+      - SPRING_DATA_MONGODB_URI=mongodb://admin:admin123@mongodb:27017/product_db?authSource=admin
     depends_on:
-      - postgres
+      - mongodb
+
+  auth-service:
+    build: ./auth-service
+    container_name: auth-service
+    ports:
+      - "8085:8085"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://admin:admin123@mongodb:27017/auth_db?authSource=admin
+      - JWT_SECRET=404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      - JWT_EXPIRATION=86400000
+    depends_on:
+      - mongodb
 
   order-service:
     build: ./order-service
@@ -62,10 +74,10 @@ services:
     ports:
       - "8082:8082"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/order_db
+      - SPRING_DATA_MONGODB_URI=mongodb://admin:admin123@mongodb:27017/order_db?authSource=admin
       - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
     depends_on:
-      - postgres
+      - mongodb
       - kafka
 
   inventory-service:
@@ -74,10 +86,10 @@ services:
     ports:
       - "8083:8083"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/inventory_db
+      - SPRING_DATA_MONGODB_URI=mongodb://admin:admin123@mongodb:27017/inventory_db?authSource=admin
       - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
     depends_on:
-      - postgres
+      - mongodb
       - kafka
 
   notification-service:
@@ -126,3 +138,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "8888:8080"
+
+volumes:
+  mongodb_data:

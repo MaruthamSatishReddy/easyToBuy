@@ -1,12 +1,12 @@
 package com.easyToBuy.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.*;
 import java.util.List;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "t_products")
+@Document(collection = "products")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,8 +14,7 @@ import java.math.BigDecimal;
 @Builder
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private String skuCode;
     private String name;
     private String description;
@@ -24,9 +23,7 @@ public class Product {
     private String category;
     private Double rating;
 
-    @ElementCollection
     private List<String> images;
 
-    @ElementCollection
     private List<String> sizes;
 }

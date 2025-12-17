@@ -1,10 +1,10 @@
 package com.easyToBuy.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.*;
 
-@Entity
-@Table(name = "t_inventory")
+@Document(collection = "inventory")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -12,8 +12,7 @@ import lombok.*;
 @Builder
 public class Inventory {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private String skuCode;
     private Integer quantity;
 }
