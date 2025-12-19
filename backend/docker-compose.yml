@@ -53,8 +53,11 @@ services:
       - "8081:8081"
     environment:
       - SPRING_DATA_MONGODB_URI=mongodb://admin:admin123@mongodb:27017/product_db?authSource=admin
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-your-api-key-here}
     depends_on:
       - mongodb
+      - kafka
 
   auth-service:
     build: ./auth-service
@@ -100,6 +103,18 @@ services:
     environment:
       - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
     depends_on:
+      - kafka
+
+  rating-service:
+    build: ./rating-service
+    container_name: rating-service
+    ports:
+      - "8086:8086"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://admin:admin123@mongodb:27017/rating_db?authSource=admin
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+    depends_on:
+      - mongodb
       - kafka
 
   frontend:

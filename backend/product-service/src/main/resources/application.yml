@@ -3,7 +3,28 @@ spring:
     name: product-service
   data:
     mongodb:
-      uri: mongodb://admin:admin123@localhost:27017/product_db?authSource=admin
+      uri: ${SPRING_DATA_MONGODB_URI:mongodb://admin:admin123@localhost:27017/product_db?authSource=admin}
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY:your-api-key-here}
+      chat:
+        options:
+          model: gpt-4o-mini
+          temperature: 0.7
+      embedding:
+        options:
+          model: text-embedding-3-small
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9094}
+    consumer:
+      group-id: product-service
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+  cache:
+    type: simple
+    cache-names: recommendations,similar-products
 
 server:
   port: 8081
@@ -12,4 +33,13 @@ management:
   endpoints:
     web:
       exposure:
-        include: prometheus
+        include: health,info,prometheus,metrics
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+logging:
+  level:
+    com.easyToBuy: DEBUG
+    org.springframework.ai: INFO
