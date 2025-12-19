@@ -42,6 +42,14 @@ public class ProductService {
                 return products.stream().map(this::mapToProductResponse).toList();
         }
 
+        public ProductResponse getProductById(String id) {
+                Product product = productRepository.findById(id)
+                                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
+
+                log.info("Product {} retrieved", product.getId());
+                return mapToProductResponse(product);
+        }
+
         private ProductResponse mapToProductResponse(Product product) {
                 return new ProductResponse(
                                 product.getId(),

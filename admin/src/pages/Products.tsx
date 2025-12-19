@@ -50,6 +50,14 @@ export default function Products() {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
 
+        // Collect all image URLs and filter out empty ones
+        const imageUrls = [
+            formData.get('imageUrl1'),
+            formData.get('imageUrl2'),
+            formData.get('imageUrl3'),
+            formData.get('imageUrl4')
+        ].filter(url => url && url.toString().trim() !== '');
+
         const payload = {
             name: formData.get('name'),
             description: formData.get('description'),
@@ -57,7 +65,7 @@ export default function Products() {
             brand: formData.get('brand'),
             category: formData.get('category'),
             skuCode: `SKU-${Date.now()}`,
-            images: [formData.get('imageUrl') || 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=400'],
+            images: imageUrls.length > 0 ? imageUrls : ['https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=400'],
             sizes: ['S', 'M', 'L', 'XL']
         };
 
@@ -164,16 +172,47 @@ export default function Products() {
                                 />
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium text-slate-700">Image URL</label>
-                                <div className="flex gap-2">
-                                    <ImageIcon className="h-11 w-11 text-slate-400 border border-slate-300 rounded-lg p-2" />
-                                    <input
-                                        name="imageUrl"
-                                        className="flex h-11 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm shadow-sm transition-all focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
-                                        placeholder="https://example.com/image.jpg"
-                                        defaultValue="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=400"
-                                    />
+                            {/* Multiple Images Section */}
+                            <div className="space-y-3">
+                                <label className="text-sm font-medium text-slate-700">Product Images</label>
+                                <div className="space-y-2">
+                                    {/* Image URL Inputs */}
+                                    <div className="space-y-2">
+                                        <div className="flex gap-2">
+                                            <ImageIcon className="h-11 w-11 text-slate-400 border border-slate-300 rounded-lg p-2 flex-shrink-0" />
+                                            <input
+                                                name="imageUrl1"
+                                                className="flex h-11 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm shadow-sm transition-all focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+                                                placeholder="Main image URL (required)"
+                                                defaultValue="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=400"
+                                            />
+                                        </div>
+                                        <div className="flex gap-2">
+                                            <ImageIcon className="h-11 w-11 text-slate-400 border border-slate-300 rounded-lg p-2 flex-shrink-0" />
+                                            <input
+                                                name="imageUrl2"
+                                                className="flex h-11 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm shadow-sm transition-all focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+                                                placeholder="Additional image URL (optional)"
+                                            />
+                                        </div>
+                                        <div className="flex gap-2">
+                                            <ImageIcon className="h-11 w-11 text-slate-400 border border-slate-300 rounded-lg p-2 flex-shrink-0" />
+                                            <input
+                                                name="imageUrl3"
+                                                className="flex h-11 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm shadow-sm transition-all focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+                                                placeholder="Additional image URL (optional)"
+                                            />
+                                        </div>
+                                        <div className="flex gap-2">
+                                            <ImageIcon className="h-11 w-11 text-slate-400 border border-slate-300 rounded-lg p-2 flex-shrink-0" />
+                                            <input
+                                                name="imageUrl4"
+                                                className="flex h-11 w-full rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm shadow-sm transition-all focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+                                                placeholder="Additional image URL (optional)"
+                                            />
+                                        </div>
+                                    </div>
+                                    <p className="text-xs text-slate-500">Add up to 4 product images. The first image will be the main product image.</p>
                                 </div>
                             </div>
 
