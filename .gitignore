@@ -1,0 +1,36 @@
+# Maven build artifacts
+**/target/
+*.jar
+*.war
+*.ear
+*.class
+
+# Node modules and build
+**/node_modules/
+**/dist/
+**/.next/
+**/build/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+
+# MongoDB data
+**/data/db/
